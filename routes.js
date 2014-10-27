@@ -66,7 +66,7 @@ module.exports = [
     handler: function (req, res, srv) {
       if (typeof req.session.user === 'undefined')
         return res.status(401).send();
-      var _id = new srv.db.util.ObjectID(req.body._id);
+      var _id = new srv.db.util.ObjectID(req.query._id);
       srv.db.find({_id: _id}, 'events', {})
       .then(function (docs) {
         if (docs.length < 1)

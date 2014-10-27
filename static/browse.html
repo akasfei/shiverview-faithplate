@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div ng-if="featured" class="col-md-12">
+      <div class="card">
+        <img class="cover" ng-src="{{featured.coverimg ? featured.coverimg : '/faithplate/images/default-cover.png'}}">
+        <div class="card-content">
+          <h2><a ng-href="{{'#/faithplate/events/' + featured._id}}">Featured: {{featured.title}}</a></h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6" ng-if="!events || events.length < 1">
+      <div class="card">
+        <div class="card-content">
+          <h2>No events available. <a href="#/faithplate/myevents" class="btn btn-primary">Create event</a></h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" ng-repeat="event in events">
+      <div class="card">
+        <img class="cover" ng-src="{{event.coverimg ? event.coverimg : '/faithplate/images/default-cover.png'}}">
+        <div class="card-content">
+          <h3><a ng-href="{{'#/faithplate/events/' + event._id}}">{{event.title}}</a></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

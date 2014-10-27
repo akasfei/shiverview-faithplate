@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <button type="button" class="btn btn-primary pull-right" ng-click="create();">Create</button>
+      <h1>My Events</h1>
+    </div>
+    <div class="col-md-12" ng-show="showEditor" ng-submit="submit($event)">
+      <div class="card">
+        <form class="card-content" name="eventForm">
+          <div class="form-group" ng-class="{'has-error': (!eventForm.title.$valid && titleBlurred)}">
+            <label for="title">Event title</label>
+            <input type="text" class="form-control" name="title" id="title" ng-model="payload.title" required ng-blur="titleBlurred=true">
+            <span ng-show="eventForm.username.$error.required && titleBlurred" class="help-block">Required.</span>
+          </div>
+          <div class="form-group" ng-class="{'has-error': (!eventForm.desc.$valid && descBlurred)}">
+            <label for="title">Event description</label>
+            <textarea class="form-control" name="desc" id="desc" rows="4" ng-model="payload.desc" required ng-blur="descBlurred=true"></textarea>
+          </div>
+          <div class="file-drop-zone" ng-file-drop="upload($files)" ng-file-drag-over-class="active" ng-click="openFileSelect()">
+            <h3>Drag a photo here</h3>
+            <p>- or -</p>
+            <button type="button" class="btn btn-default">Select File</button>
+            <input id="file-input" type="file" ng-show="false" ng-file-select="upload($files)">
+          </div>
+          <p>
+            <button type="submit" class="btn btn-success">{{update? 'Update event': 'Create event'}}</button>
+            <button type="reset" class="btn btn-default">Discard changes</button>
+          </p>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-6" ng-if="!events || events.length < 1">
+      <div class="card">
+        <div class="card-content">
+          <h2>You haven't created any events. <button type="button" class="btn btn-primary">Create now</button></h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" ng-repeat="event in events">
+      <div class="card">
+        <img class="cover" ng-src="{{event.coverimg ? event.coverimg : '/faithplate/images/default-cover.png'}}">
+        <div class="card-content">
+          <h3><a ng-href="{{'#/faithplate/events/' + event._id}}">{{event.title}}</a></h3>
+          <p>
+            <button type="button" class="btn btn-info" ng-click="edit($index)">Edit</button>
+            <button type="button" class="btn btn-danger" ng-click="delete($index)">Delete</button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

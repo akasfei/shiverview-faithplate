@@ -1,26 +1,107 @@
 (function (angular) {
 angular.module('shiverview')
-.controller('boilerplateHomeCtrl', ['$scope', function ($scope) {
-  $scope.stuff = 'Hello Boilerplate';
-  $scope.date = new Date();
-}])
-.controller('boilerplateFooCtrl', ['$scope', '$http', function ($scope, $http) {
-  $scope.http = function (path) {
+.controller('faithplateAllCtrl', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
+  $scope.get = function (path) {
     $http({
-      url: '/boilerplate/' + path,
+      url: '/faithplate/events',
       method: 'get'
     })
     .success(function (data) {
-      if (path === 'get') {
-        $scope.list = data;
-      } else if (path === 'add' || path === 'drop') {
-        $scope.http('get');
-      }
+      $scope.events = data;
     })
+    .error(function (err) {
+      $rootScope.$broadcast('errorMessage', 'An error has ocurred. Please try again later.');
+    });
   };
-  $scope.http('get');
+  $scope.get();
 }])
-.controller('boilerplateBarCtrl', ['$scope', function ($scope) {
-  $scope.stuff = 'Hello User.';
+.controller('faithplateMECtrl', ['$scope', '$http', '$rootScope', '$location', '$upload', 'user', function ($scope, $http, $rootScope, $location, $upload, user) {
+  $scope.user = user.get();
+  if (typeof $scope.user === 'undefined')
+    $location.path('/users/signin');
+  else if (typeof $scope.user.then === 'function')
+    $scope.user.success(function () { $scope.user = user.get(); $scope.get(); }).error(function () { $location.path('/users/signin'); });
+  $scope.payload = {};
+  $scope.get = function (path) {
+    $http({
+      url: '/faithplate/events',
+      method: 'get',
+      params: {c: $scope.user.name}
+    })
+    .success(function (data) {
+      $scope.events = data;
+    })
+    .error(function (err) {
+      $rootScope.$broadcast('errorMessage', 'An error has ocurred. Please try again later.');
+    });
+  };
+  $scope.submit = function (e) {
+    if (e) e.preventDefault();
+    var method = 'put';
+    if ($scope.update === true)
+      method = 'post';
+    $http({
+      url: '/faithplate/events',
+      method: method,
+      data: $scope.payload
+    })
+    .success(function () {
+      $scope.showEditor = false;
+      $rootScope.$broadcast('successMessage', 'Your changes have been saved.');
+      $scope.get();
+    })
+    .error(function (err, status) {
+      $rootScope.$broadcast('errorMessage', 'An error has ocurred. Please try again later.');
+    });
+  };
+  $scope.create = function () {
+    $scope.update = false;
+    $scope.payload = {};
+  };
+  $scope.edit = function (index) {
+    if (typeof $scope.events === 'undefined') return;
+    $scope.update = true;
+    $scope.payload._id = $scope.events[index]._id;
+    $scope.payload.title = $scope.events[index].title;
+    $scope.payload.desc = $scope.events[index].desc;
+    $scope.showEditor = true;
+  };
+  $scope.delete = function (index) {
+    if (typeof $scope.events === 'undefined') return;
+    $http({
+      url: '/faithplate/events',
+      method: 'delete',
+      params: {_id: $scope.events[index]._id}
+    })
+    .success(function () {
+      $scope.events.splice(index, 1);
+      $rootScope.$broadcast('successMessage', 'The event has been removed.');
+    })
+    .error(function () {
+      $rootScope.$broadcast('errorMessage', 'An error has ocurred. Please try again later.');
+    });
+  };
+  $scope.upload = function ($files) {
+    $scope.progress = 0;
+    $rootScope.$broadcast('setProgress', 0);
+    $upload.upload({
+      url: '/users/usercontent/faithplate/img',
+      file: $files[0]
+    })
+    .progress(function (e) {
+      $rootScope.$broadcast('setProgress', parseInt(100.0 * e.loaded / e.total));
+    })
+    .success(function (data) {
+      $rootScope.$broadcast('setProgress', 100);
+      if (data.path) {
+        $scope.payload.coverimg = data.path;
+      }
+    });
+  };
+  $scope.openFileSelect = function () {
+    var input = document.getElementById('file-input');
+    var event = new MouseEvent('click', {'view': window, 'bubbles': true, 'calcelable': true});
+    input.dispatchEvent(event);
+  };
 }]);
 })(window.angular);
