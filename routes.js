@@ -27,8 +27,11 @@ module.exports = [
     handler: function (req, res, srv) {
       if (typeof req.session.user === 'undefined')
         return res.status(401).send();
-      req.body.creator = req.session.user.name;
-      srv.db.insert(req.body, 'events', {})
+      var payload = {};
+      for (var porp in req.body)
+        payload[prop] = req.body[prop]
+      payload.creator = req.session.user.name;
+      srv.db.insert(payload, 'events', {})
       .then(function () {
         res.send();
       }, function (err) {

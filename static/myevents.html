@@ -17,7 +17,7 @@
             <textarea class="form-control" name="desc" id="desc" rows="4" ng-model="payload.desc" required ng-blur="descBlurred=true"></textarea>
           </div>
           <div ng-show="imageUploaded">
-            <img ng-src="payload.coverimg">
+            <img ng-src="{{payload.coverimg}}">
           </div>
           <div class="file-drop-zone" ng-show="!imageUploaded" ng-file-drop="upload($files)" ng-file-drag-over-class="active" ng-click="openFileSelect()">
             <h3>Drag a photo here</h3>
