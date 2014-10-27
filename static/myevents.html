@@ -24,7 +24,7 @@
           </div>
           <p>
             <button type="submit" class="btn btn-success">{{update? 'Update event': 'Create event'}}</button>
-            <button type="reset" class="btn btn-default">Discard changes</button>
+            <button type="reset" class="btn btn-default" ng-click="cancel();">Discard changes</button>
           </p>
         </form>
       </div>
@@ -32,7 +32,7 @@
     <div class="col-md-6" ng-if="!events || events.length < 1">
       <div class="card">
         <div class="card-content">
-          <h2>You haven't created any events. <button type="button" class="btn btn-primary">Create now</button></h2>
+          <h2>You haven't created any events. <button type="button" class="btn btn-primary" ng-click="create();">Create now</button></h2>
         </div>
       </div>
     </div>

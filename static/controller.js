@@ -56,6 +56,7 @@ angular.module('shiverview')
   };
   $scope.create = function () {
     $scope.update = false;
+    $scope.showEditor = true;
     $scope.payload = {};
   };
   $scope.edit = function (index) {
@@ -80,6 +81,9 @@ angular.module('shiverview')
     .error(function () {
       $rootScope.$broadcast('errorMessage', 'An error has ocurred. Please try again later.');
     });
+  };
+  $scope.cancel = function () {
+    $scope.showEditor = false;
   };
   $scope.upload = function ($files) {
     $scope.progress = 0;
