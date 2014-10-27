@@ -1,0 +1,12 @@
+{
+  "name": "shiverview-faithplate",
+  "main": "index.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/akasfei/shiverview-faithplate",
+  "authors": [
+    "akasfei <akasfei@gmail.com>"
+  ],
+  "description": "Shiverview application boilerplate.",
+  "license": "MIT",
+  "dependencies": { }
+}

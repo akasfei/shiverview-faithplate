@@ -1,0 +1,25 @@
+{
+  "name": "shiverview-faithplate",
+  "desc": "Shiverview application faithplate.",
+  "path": "/faithplate",
+  "static": "static",
+  "ui": {
+    "icon": "favicon.png",
+    "navName": "Events",
+    "index": 1,
+    "views": {
+      "/all": {"scope": "everyone", "title": "All Events", "url": "/browse.html", "ctrl": "faithplateAllCtrl"},
+      "/myevents": {"scope": "users", "title": "My Events", "url": "/myevents.html", "ctrl": "faithplateMECtrl"},
+      "/mytickets": {"scope": "users", "title": "My Tickets", "url": "/mytickets.html", "ctrl": "faithplateMTCtrl"},
+      "/admin": {"scope": "admin", "title": "Administrative", "url": "/admin.html", "ctrl": "faithplateAdminCtrl"}
+    },
+    "scripts": "controller.js"
+  },
+  "privileges": {
+    "database": "shiverview-events"
+  },
+  "dependencies": {
+    "shiverview-core-ui": "*",
+    "shiverview-core-users": "*"
+  }
+}
