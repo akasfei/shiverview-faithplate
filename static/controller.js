@@ -84,7 +84,12 @@ angular.module('shiverview')
   };
   $scope.cancel = function () {
     $scope.showEditor = false;
+    $scope.imageUploaded = false;
   };
+  $scope.removeImage = function () {
+    delete $scope.payload.coverimg;
+    $scope.imageUploaded = false;
+  }
   $scope.upload = function ($files) {
     $scope.progress = 0;
     $rootScope.$broadcast('setProgress', 0);
@@ -98,6 +103,7 @@ angular.module('shiverview')
     .success(function (data) {
       $rootScope.$broadcast('setProgress', 100);
       if (data.path) {
+        $scope.imageUploaded = true;
         $scope.payload.coverimg = data.path;
       }
     });

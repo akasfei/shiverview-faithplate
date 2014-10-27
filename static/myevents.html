@@ -16,7 +16,10 @@
             <label for="title">Event description</label>
             <textarea class="form-control" name="desc" id="desc" rows="4" ng-model="payload.desc" required ng-blur="descBlurred=true"></textarea>
           </div>
-          <div class="file-drop-zone" ng-file-drop="upload($files)" ng-file-drag-over-class="active" ng-click="openFileSelect()">
+          <div ng-show="imageUploaded">
+            <img ng-src="payload.coverimg">
+          </div>
+          <div class="file-drop-zone" ng-show="!imageUploaded" ng-file-drop="upload($files)" ng-file-drag-over-class="active" ng-click="openFileSelect()">
             <h3>Drag a photo here</h3>
             <p>- or -</p>
             <button type="button" class="btn btn-default">Select File</button>
@@ -25,6 +28,7 @@
           <p>
             <button type="submit" class="btn btn-success">{{update? 'Update event': 'Create event'}}</button>
             <button type="reset" class="btn btn-default" ng-click="cancel();">Discard changes</button>
+            <button type="button" class="btn btn-default" ng-click="removeImage();">Discard image</button>
           </p>
         </form>
       </div>
