@@ -35,12 +35,6 @@ angular.module('shiverview')
   });
 }])
 .controller('faithplateMECtrl', ['$scope', '$http', '$rootScope', '$location', '$upload', 'user', function ($scope, $http, $rootScope, $location, $upload, user) {
-  $scope.user = user.get();
-  if (typeof $scope.user === 'undefined')
-    $location.path('/users/signin');
-  else if (typeof $scope.user.then === 'function')
-    $scope.user.success(function () { $scope.user = user.get(); $scope.get(); }).error(function () { $location.path('/users/signin'); });
-  $scope.payload = {};
   $scope.get = function (path) {
     $http({
       url: '/faithplate/events',
@@ -132,5 +126,13 @@ angular.module('shiverview')
     var event = new MouseEvent('click', {'view': window, 'bubbles': true, 'calcelable': true});
     input.dispatchEvent(event);
   };
+  $scope.user = user.get();
+  if (typeof $scope.user === 'undefined')
+    $location.path('/users/signin');
+  else if (typeof $scope.user.then === 'function')
+    $scope.user.success(function () { $scope.user = user.get(); $scope.get(); }).error(function () { $location.path('/users/signin'); });
+  else
+    $scope.get();
+  $scope.payload = {};
 }]);
 })(window.angular);

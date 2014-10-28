@@ -9,7 +9,7 @@
     "index": 1,
     "views": {
       "/all": {"scope": "everyone", "title": "All Events", "url": "/browse.html", "ctrl": "faithplateAllCtrl"},
-      "/events/:id": {"scope": "everyone", "url": "/eventdetails.html", "ctrl": "faithplateDetailCtrl"},
+      "/events/:id": {"url": "/eventdetails.html", "ctrl": "faithplateDetailCtrl"},
       "/myevents": {"scope": "users", "title": "My Events", "url": "/myevents.html", "ctrl": "faithplateMECtrl"},
       "/mytickets": {"scope": "users", "title": "My Tickets", "url": "/mytickets.html", "ctrl": "faithplateMTCtrl"},
       "/admin": {"scope": "admin", "title": "Administrative", "url": "/admin.html", "ctrl": "faithplateAdminCtrl"}
