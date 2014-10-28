@@ -13,6 +13,8 @@ module.exports = [
         query.title = {$test: {$search: req.query.t}};
       if (req.query.c)
         query.creator = req.query.c;
+      if (req.query.id)
+        query._id = new srv.db.util.ObjectID(req.query.id);
       srv.db.find(query, 'events', options)
       .then(function (docs) {
         res.send(docs);

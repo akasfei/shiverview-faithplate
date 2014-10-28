@@ -15,6 +15,25 @@ angular.module('shiverview')
   };
   $scope.get();
 }])
+.controller('faithplateDetailCtrl', ['$scope', '$http', '$rootScope', '$routeParams', 'user', function ($scope, $http, $rootScope, $routeParams, user) {
+  $scope.user = user.get();
+  if (typeof $scope.user.then === 'function')
+    $scope.user.success(function () { $scope.user = user.get(); $scope.allowBooking = true; });
+  $http({
+    url: '/faithplate/events',
+    method: 'get',
+    params: {id: $routeParams.id}
+  })
+  .success(function (data) {
+    if (data && data.length < 1)
+      $scope.event = {title: 'Event not found'};
+    else
+      $scope.event = data[0];
+  })
+  .error(function (err) {
+    $rootScope.$broadcast('errorMessage', 'An error has ocurred. Please try again later.');
+  });
+}])
 .controller('faithplateMECtrl', ['$scope', '$http', '$rootScope', '$location', '$upload', 'user', function ($scope, $http, $rootScope, $location, $upload, user) {
   $scope.user = user.get();
   if (typeof $scope.user === 'undefined')

@@ -6,6 +6,7 @@
     </div>
     <div class="col-md-12" ng-show="showEditor" ng-submit="submit($event)">
       <div class="card">
+        <img class="cover" ng-src="{{payload.coverimg}}">
         <form class="card-content" name="eventForm">
           <div class="form-group" ng-class="{'has-error': (!eventForm.title.$valid && titleBlurred)}">
             <label for="title">Event title</label>
@@ -15,9 +16,6 @@
           <div class="form-group" ng-class="{'has-error': (!eventForm.desc.$valid && descBlurred)}">
             <label for="title">Event description</label>
             <textarea class="form-control" name="desc" id="desc" rows="4" ng-model="payload.desc" required ng-blur="descBlurred=true"></textarea>
-          </div>
-          <div ng-show="imageUploaded">
-            <img ng-src="{{payload.coverimg}}">
           </div>
           <div class="file-drop-zone" ng-show="!imageUploaded" ng-file-drop="upload($files)" ng-file-drag-over-class="active" ng-click="openFileSelect()">
             <h3>Drag a photo here</h3>
