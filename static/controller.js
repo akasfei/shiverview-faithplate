@@ -27,8 +27,10 @@ angular.module('shiverview')
   .success(function (data) {
     if (data && data.length < 1)
       $scope.event = {title: 'Event not found'};
-    else
+    else {
       $scope.event = data[0];
+      $scope.updateBookings();
+    }
   })
   .error(function (err) {
     $rootScope.$broadcast('errorMessage', 'An error has ocurred. Please try again later.');

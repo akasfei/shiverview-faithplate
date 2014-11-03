@@ -7,7 +7,7 @@
         <p>{{event.desc}}</p>
         <h5>By {{event.creator}}</h5>
         <p>{{bookings?bookings.length: '0'}} people have booked this event.</p>
-        <p><button type="button" class="btn btn-{{booked?'primary':'warning'}}{{allowBooking?'': ' disabled'}}" ng-click="toggleBook()">{{mebooked? 'Unbook': 'Book'}}</button></p>
+        <p><button type="button" class="btn btn-{{mebooked?'warning':'primary'}}{{allowBooking?'': ' disabled'}}" ng-click="toggleBook()">{{mebooked? 'Unbook': 'Book'}}</button></p>
       </div>
     </div>
   </div>
