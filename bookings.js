@@ -10,9 +10,7 @@ module.exports = [
         query.user = req.session.user.name;
       srv.db.find(query, 'bookings', {})
       .then(function (docs) {
-        if (docs.length < 1)
-          return res.status(404).send();
-        return res.send(docs);
+        res.send(docs);
       }, function (err) {
         next(err);
       });
