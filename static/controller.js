@@ -33,6 +33,44 @@ angular.module('shiverview')
   .error(function (err) {
     $rootScope.$broadcast('errorMessage', 'An error has ocurred. Please try again later.');
   });
+  $scope.updateBookings = function () {
+    $http({
+      url: '/faithplate/bookings',
+      method: 'get',
+      params: {id: $routeParams.id}
+    })
+    .success(function (data) {
+      $scope.bookings = data;
+      $scope.mebooked = false;
+      for (var i = 0; i < $scope.bookings.length; i++) {
+        if ($scope.bookings[i].user === $scope.user.name) {
+          $scope.mebooked = true;
+          break;
+        }
+      }
+    })
+    .error(function (err) {
+      $rootScope.$broadcast('errorMessage', 'An error has ocurred. Please try again later.');
+    });
+  };
+  $scope.toggleBook = function () {
+    var payload = {event: $routeParams.id};
+    var method = 'put';
+    if ($scope.mebooked)
+      method = 'delete';
+    $http({
+      url: '/faithplage/bookings',
+      method: method,
+      data: payload,
+      params: payload
+    })
+    .success(function () {
+      $scope.updateBookings();
+    })
+    .error(function (err) {
+      $rootScope.$broadcast('errorMessage', 'An error has ocurred. Please try again later.');
+    });
+  };
 }])
 .controller('faithplateMECtrl', ['$scope', '$http', '$rootScope', '$location', '$upload', 'user', function ($scope, $http, $rootScope, $location, $upload, user) {
   $scope.get = function (path) {

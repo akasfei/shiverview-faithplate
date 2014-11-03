@@ -90,4 +90,5 @@ module.exports = [
       });
     }
   },
-];
+]
+.concat(require('./bookings.js'));
