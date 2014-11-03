@@ -56,7 +56,7 @@ angular.module('shiverview')
     });
   };
   $scope.toggleBook = function () {
-    var payload = {event: $routeParams.id};
+    var payload = {id: $routeParams.id};
     var method = 'put';
     if ($scope.mebooked)
       method = 'delete';
