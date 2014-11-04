@@ -17,6 +17,8 @@ angular.module('shiverview')
 }])
 .controller('faithplateDetailCtrl', ['$scope', '$http', '$rootScope', '$routeParams', 'user', function ($scope, $http, $rootScope, $routeParams, user) {
   $scope.user = user.get();
+  if (typeof $scope.user !== 'undefined')
+    $scope.allowBooking = true;
   if (typeof $scope.user.then === 'function')
     $scope.user.success(function () { $scope.user = user.get(); $scope.allowBooking = true; });
   $http({
