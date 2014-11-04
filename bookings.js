@@ -3,10 +3,10 @@ module.exports = [
     url: '/bookings',
     method: 'get',
     handler: function (req, res, srv) {
-      if (typeof req.params.id === 'undefined')
+      if (typeof req.query.id === 'undefined')
         return res.status(404).send();
-      var query = {event: req.params.id};
-      if (req.params.me !== 'undefined' && req.session.user !== 'undefined')
+      var query = {event: req.query.id};
+      if (req.query.me !== 'undefined' && req.session.user !== 'undefined')
         query.user = req.session.user.name;
       srv.db.find(query, 'bookings', {})
       .then(function (docs) {
@@ -39,9 +39,9 @@ module.exports = [
     handler: function (req, res, srv) {
       if (typeof req.session.user === 'undefined')
         return res.status(401).send();
-      if (typeof req.params.id === 'undefined')
+      if (typeof req.query.id === 'undefined')
         return res.status(404).send();
-      var query = {event: req.params.id, user: req.session.user.name};
+      var query = {event: req.query.id, user: req.session.user.name};
       srv.db.remove(query, 'bookings', {})
       .then(function () {
         res.send();
