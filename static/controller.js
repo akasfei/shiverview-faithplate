@@ -61,7 +61,7 @@ angular.module('shiverview')
     if ($scope.mebooked)
       method = 'delete';
     $http({
-      url: '/faithplage/bookings',
+      url: '/faithplate/bookings',
       method: method,
       data: payload,
       params: payload
