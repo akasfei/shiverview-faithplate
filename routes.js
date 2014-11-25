@@ -10,7 +10,7 @@ module.exports = [
       if (req.query.l)
         options.limit = req.query.l;
       if (req.query.t)
-        query.title = {$test: {$search: req.query.t}};
+        query.title = req.query.t;
       if (req.query.c)
         query.creator = req.query.c;
       if (req.query.id)
@@ -31,7 +31,7 @@ module.exports = [
         return res.status(401).send();
       var payload = {};
       for (var prop in req.body)
-        payload[prop] = req.body[prop]
+        payload[prop] = req.body[prop];
       payload.creator = req.session.user.name;
       srv.db.insert(payload, 'events', {})
       .then(function () {
@@ -52,7 +52,7 @@ module.exports = [
       .then(function (docs) {
         if (docs.length < 1)
           return res.status(404).send();
-        if (!req.session.user.admin && req.session.user.name !== docs[0].title)
+        if (!req.session.user.admin && req.session.user.name !== docs[0].creator)
           return res.status(403).send();
         delete req.body._id;
         srv.db.update({_id: _id}, {$set: req.body}, 'events', {})
@@ -77,7 +77,7 @@ module.exports = [
       .then(function (docs) {
         if (docs.length < 1)
           return res.status(404).send();
-        if (!req.session.user.admin && req.session.user.name !== docs[0].title)
+        if (!req.session.user.admin && req.session.user.name !== docs[0].creator)
           return res.status(403).send();
         srv.db.remove({_id: _id}, 'events', {})
         .then(function () {
@@ -89,6 +89,6 @@ module.exports = [
         res.send(err);
       });
     }
-  },
+  }
 ]
 .concat(require('./bookings.js'));
